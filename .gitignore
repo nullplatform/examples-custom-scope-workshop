@@ -132,3 +132,6 @@ dist
 # Intellij
 
 .idea
+k8s/output
+np-agent-manifest.yaml
+.minikube_mount_pid
