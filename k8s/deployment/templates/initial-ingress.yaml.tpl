@@ -28,7 +28,6 @@ metadata:
   {{- end }}
 {{- end }}
   annotations:
-    alb.ingress.kubernetes.io/actions.bg-deployment: '{"type":"fixed-response","fixedResponseConfig":{"contentType":"application/json","statusCode":"503","messageBody":"{\"status\":503}"}}'
     alb.ingress.kubernetes.io/actions.response-404: '{"type":"fixed-response","fixedResponseConfig":{"contentType":"text/plain","statusCode":"404","messageBody":"404 scope not found or has not been deployed yet"}}'
     alb.ingress.kubernetes.io/group.name: k8s-nullplatform-{{ .ingress_visibility }}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80},{"HTTPS":443}]'
