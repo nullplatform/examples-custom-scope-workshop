@@ -10,7 +10,7 @@
       "api_key": "{{ env.Getenv "NP_API_KEY" }}",
       "command": {
         "data": {
-          "cmdline": "/root/.np/services/entrypoint --service-path=/root/.np/services/{{ env.Getenv "SERVICE_PATH" }}",
+          "cmdline": "/root/.np/services/entrypoint --service-path=/root/.np/services/{{ env.Getenv "SERVICE_PATH" }} --overrides-path=/root/.np/services/spin",
           "environment": {
             "NP_ACTION_CONTEXT": "'${NOTIFICATION_CONTEXT}'"
           }
