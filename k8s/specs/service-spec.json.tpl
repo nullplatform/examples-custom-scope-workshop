@@ -513,7 +513,7 @@
       }
    }
   },
-  "name": "Kubernetes-{{ (default (env.Getenv "USER") (env.Getenv "NAME")) }}",
+  "name": "Kubernetes-Exposer-{{ (default (env.Getenv "USER") (env.Getenv "NAME")) }}",
   "selectors": {
     "category": "any",
     "imported": false,

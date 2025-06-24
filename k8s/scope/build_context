@@ -61,5 +61,3 @@ export OUTPUT_DIR="$SERVICE_PATH/output/$SCOPE_ID"
 export CONTEXT
 
 mkdir -p "$OUTPUT_DIR"
-
-

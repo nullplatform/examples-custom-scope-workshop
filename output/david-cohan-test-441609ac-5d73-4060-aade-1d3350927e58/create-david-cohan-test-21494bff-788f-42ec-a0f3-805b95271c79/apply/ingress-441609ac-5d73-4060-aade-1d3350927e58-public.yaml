@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k-8-s-david-cohan-test-441609ac-5d73-4060-aade-1d3350927e58-public
+  namespace: nullplatform
+  labels:
+    nullplatform: "true"
+    service: david-cohan-test
+    service_id: 441609ac-5d73-4060-aade-1d3350927e58
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/actions.response-404: >-
+          {"type":"fixed-response","fixedResponseConfig":{"contentType":"text/plain","statusCode":"404","messageBody":"no scopes exposed through this service."}}
+spec:
+  ingressClassName: alb
+  rules:
+    - host: davidcohan.github.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: response-404
+                port:
+                  name: use-annotation
