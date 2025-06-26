@@ -31,15 +31,11 @@ if [ "$DEPLOY_STRATEGY" = "rolling" ]; then
   GREEN_REPLICAS=$(( MIN_REPLICAS > GREEN_REPLICAS ? MIN_REPLICAS : GREEN_REPLICAS ))
 fi
 
-K8S_MODIFIERS="${K8S_MODIFIERS:-{}}"
-K8S_MODIFIERS=$(echo "$K8S_MODIFIERS" | jq .)
-
 CONTEXT=$(echo "$CONTEXT" | jq \
           --arg blue_deployment_id "$BLUE_DEPLOYMENT_ID" \
           --arg blue_replicas "$BLUE_REPLICAS" \
           --arg green_replicas "$GREEN_REPLICAS" \
           --arg total_replicas "$REPLICAS" \
-          --argjson modifiers "$K8S_MODIFIERS" \
           '. + {blue_deployment_id: $blue_deployment_id, blue_replicas: $blue_replicas, green_replicas: $green_replicas, total_replicas: $total_replicas, k8s_modifiers: $modifiers}')
 
 DEPLOYMENT_ID=$(echo "$CONTEXT" | jq -r '.deployment.id')

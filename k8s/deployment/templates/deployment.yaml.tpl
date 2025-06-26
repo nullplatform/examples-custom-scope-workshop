@@ -62,6 +62,9 @@ spec:
       {{- end }}
     {{- end }}
     spec:
+      {{- if .service_account_name }}
+      serviceAccountName: {{ .service_account_name }}
+      {{- end }}
       containers:
         - name: http
           securityContext:
