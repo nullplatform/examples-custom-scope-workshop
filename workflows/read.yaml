@@ -19,18 +19,6 @@ steps:
         type: environment
       - name: RULE_PATH
         type: environment
-  - name: "build template"
+  - name: read
     type: script
-    file: "$SERVICE_PATH/scripts/build_ingress"
-    configuration:
-      TEMPLATE: "$SERVICE_PATH/templates/empty.yaml.tpl"
-    output:
-      - name: INGRESS_FILE
-        type: file
-        file: "$OUTPUT_DIR/ingress-$SERVICE_ID-$SCOPE_ID-public.yaml"
-  - name: apply
-    type: script
-    file: "$SERVICE_PATH/scripts/apply"
-    configuration:
-      ACTION: apply
-      DRY_RUN: false
+    file: "$SERVICE_PATH/scripts/read_ingress"
