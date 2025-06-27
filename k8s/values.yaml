@@ -14,6 +14,11 @@ configuration:
   BASE_INGRESS_PATH: "$SERVICE_PATH/scope/templates/base-ingress.yaml.tpl"
   INITIAL_INGRESS_PATH: "$SERVICE_PATH/deployment/templates/initial-ingress.yaml.tpl"
   BLUE_GREEN_INGRESS_PATH: "$SERVICE_PATH/deployment/templates/blue-green-ingress.yaml.tpl"
+#  MANIFEST_BACKUP:
+#    ENABLED: disabled
+#    TYPE: s3
+#    BUCKET: bucket-name
+#    PREFIX: path-prefix
 #  DEPLOY_STRATEGY: rolling
 #  K8S_MODIFIERS:
 #    global:
