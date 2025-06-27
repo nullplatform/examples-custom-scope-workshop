@@ -36,7 +36,7 @@ CONTEXT=$(echo "$CONTEXT" | jq \
           --arg blue_replicas "$BLUE_REPLICAS" \
           --arg green_replicas "$GREEN_REPLICAS" \
           --arg total_replicas "$REPLICAS" \
-          '. + {blue_deployment_id: $blue_deployment_id, blue_replicas: $blue_replicas, green_replicas: $green_replicas, total_replicas: $total_replicas, k8s_modifiers: $modifiers}')
+          '. + {blue_deployment_id: $blue_deployment_id, blue_replicas: $blue_replicas, green_replicas: $green_replicas, total_replicas: $total_replicas}')
 
 DEPLOYMENT_ID=$(echo "$CONTEXT" | jq -r '.deployment.id')
 
