@@ -20,7 +20,7 @@ You can check *Echo Server* documentation [here](https://ealenn.github.io/Echo-S
 2. Create an api-key with developer, ops, secops and secret-reader roles.
 3. Export the following env vars:
    export NP_API_KEY=$THE_API_KEY
-   export SERVICE_PATH=$(pwd)/k8s
+   export SERVICE_PATH=k8s
 4. Execute the configure script:
    ```bash
    ./configure --nrn="$NRN" --scope=k8s

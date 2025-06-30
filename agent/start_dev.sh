@@ -12,5 +12,6 @@ docker run --rm --name agent-local -it \
 	-e K8S_CONTEXT=test \
 	-e TAGS="$TAGS" \
 	-v ~/.kube/:/root/.kube \
+	-v ~/.aws:/root/.aws \
 	-v .:/root/.np/services \
 	agent-local
