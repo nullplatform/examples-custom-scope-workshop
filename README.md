@@ -15,17 +15,19 @@ You can check *Echo Server* documentation [here](https://ealenn.github.io/Echo-S
 ## How do I run locally?
 1. Install the latest beta version of the NP CLI:
    ```bash
-   curl https://cli.nullplatform.com/install.sh | VERSION=beta sh
+   curl https://cli.nullplatform.com/install.sh | sh
    ```
 2. Create an api-key with developer, ops, secops and secret-reader roles.
-3. Export the api-key as `NP_API_KEY`.
+3. Export the following env vars:
+   export NP_API_KEY=$THE_API_KEY
+   export SERVICE_PATH=k8s
 4. Execute the configure script:
    ```bash
    ./configure --nrn="$NRN" --scope=k8s
    ```
    The `configure` script will create all nullplatform's entities needed to enable the custom scope (service specification, action specifications, scope type, notification channel).
-5. Run the nullplatfom agent locally with the `start_dev.sh` script.
-6. Create a custom scope from the nullplatform UI. You should receive the notifications in your local agent. 
+5. Run the nullplatfom agent locally with the `./agent/start_dev.sh`
+6. Create a custom scope from the nullplatform UI. You should receive the notifications in your local agent.
 
 ## How do I modify this template to build my own application?
 
