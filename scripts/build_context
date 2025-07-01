@@ -11,6 +11,10 @@ ACTION_NAME=$(echo "$CONTEXT" | jq -r .slug)
 LINK_ID=$(echo "$CONTEXT" | jq -r .link.id)
 LINK_NAME=$(echo "$CONTEXT" | jq -r .link.slug)
 
+ALB_NAME=$(echo "$CONTEXT" | jq -r --arg default "k8s-nullplatform-internet-facing" '
+  .providers["container-orchestration"].balancer.public_name // $default
+')
+
 CONTEXT=$(echo "$CONTEXT" | jq \
           --arg k8s_namespace "$K8S_NAMESPACE" \
           --arg alb_name "$ALB_NAME" \
