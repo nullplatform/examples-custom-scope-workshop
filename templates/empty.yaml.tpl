@@ -10,6 +10,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/group.name: {{ .alb_name }}
+    alb.ingress.kubernetes.io/load-balancer-name: {{ .alb_name }}
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/actions.response-404: >-
           {"type":"fixed-response","fixedResponseConfig":{"contentType":"text/plain","statusCode":"404","messageBody":"no scopes exposed through this service."}}
