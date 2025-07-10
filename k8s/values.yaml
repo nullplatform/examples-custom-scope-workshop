@@ -66,3 +66,33 @@ configuration:
   #    secret:
   #      labels:
   #        cost-center: payments
+  MANIFEST_BACKUP:
+    ENABLED: false
+#    TYPE: s3
+#    BUCKET: bucket-name
+#    PREFIX: path-prefix
+#  DEPLOY_STRATEGY: rolling
+#  K8S_MODIFIERS:
+#    global:
+#      annotations:
+#        priority: P3
+#      labels:
+#        country: argentina
+#    service:
+#      annotations:
+#        some-alb-annotation: value
+#      labels:
+#        cost-center: payments
+#    ingress:
+#      annotations:
+#        some-ingress-annotation: value
+#      labels:
+#        cost-center: payments
+#    deployment:
+#      annotations:
+#        datadog-annotation: value
+#      labels:
+#        cost-center: payments
+#    secret:
+#      labels:
+#        cost-center: payments
