@@ -141,23 +141,23 @@ build_query() {
       local ok_filters="${filters},quality=\"OK (2XX, 3XX)\""
       echo "((sum(rate(nullplatform_http_response_time_count{${base_filters}}[$interval])) by (scope) * 60 - sum(rate(nullplatform_http_response_time_count{${ok_filters}}[$interval])) by (scope) * 60) / (sum(rate(nullplatform_http_response_time_count{${base_filters}}[$interval])) by (scope) * 60 )) *100"
       ;;
-     "cronjob.execution_count")
-      echo "count_over_time(kube_job_status_start_time{$filters}[$interval])"
+    "cronjob.execution_count")
+      echo "count_over_time(kube_job_created{$filters}[$interval])"
       ;;
     "cronjob.success_count")
-      echo "sum_over_time(kube_job_status_succeeded{$filters}[$interval])"
+      echo "increase(kube_job_status_succeeded{$filters}[$interval])"
       ;;
     "cronjob.failure_count")
-      echo "sum_over_time(kube_job_status_failed{$filters}[$interval])"
+      echo "increase(kube_job_status_failed{$filters}[$interval])"
       ;;
     "cronjob.last_execution_start")
-      echo "max(kube_job_status_start_time{$filters})"
+      echo "max(kube_job_created{$filters})"
       ;;
     "cronjob.cpu_usage")
-      echo "avg(rate(container_cpu_usage_seconds_total{pod=~\"$APPLICATION_ID.*\", container!=\"POD\"}[$interval]))"
+      echo "avg(rate(container_cpu_usage_seconds_total{pod=~\"$APPLICATION_ID.*\", container!=\"\", container!=\"POD\"}[$interval]))"
       ;;
     "cronjob.memory_usage")
-      echo "avg_over_time(container_memory_usage_bytes{pod=~\"$APPLICATION_ID.*\", container!=\"POD\"}[$interval])"
+      echo "avg_over_time(container_memory_usage_bytes{pod=~\"$APPLICATION_ID.*\", container!=\"\", container!=\"POD\"}[$interval])"
       ;;
     *)
       echo "up{$filters}"  # Default query if metric not recognized
