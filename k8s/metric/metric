@@ -142,16 +142,16 @@ build_query() {
       echo "((sum(rate(nullplatform_http_response_time_count{${base_filters}}[$interval])) by (scope) * 60 - sum(rate(nullplatform_http_response_time_count{${ok_filters}}[$interval])) by (scope) * 60) / (sum(rate(nullplatform_http_response_time_count{${base_filters}}[$interval])) by (scope) * 60 )) *100"
       ;;
     "cronjob.execution_count")
-      echo "count_over_time(kube_job_created{cronjob=~\"job-${SCOPE_ID}-.*\"}[$interval])"
+      echo "count_over_time(kube_job_created{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval])"
       ;;
     "cronjob.success_count")
-      echo "increase(kube_job_status_succeeded{cronjob=~\"job-${SCOPE_ID}-.*\"}[$interval])"
+      echo "increase(kube_job_status_succeeded{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval])"
       ;;
     "cronjob.failure_count")
-      echo "increase(kube_job_status_failed{cronjob=~\"job-${SCOPE_ID}-.*\"}[$interval])"
+      echo "increase(kube_job_status_failed{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval])"
       ;;
     "cronjob.last_execution_start")
-      echo "max(kube_job_created{cronjob=~\"job-${SCOPE_ID}-.*\"})"
+      echo "max(kube_job_created{job_name=~\"job-${SCOPE_ID}-.*\"})"
       ;;
     "cronjob.cpu_usage")
       echo "avg(rate(container_cpu_usage_seconds_total{pod=~\"$APPLICATION_ID.*\", container!=\"\", container!=\"POD\"}[$interval]))"
