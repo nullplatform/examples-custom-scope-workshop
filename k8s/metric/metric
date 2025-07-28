@@ -47,6 +47,24 @@ get_metric_config() {
     "system.used_memory_kb")
       echo "gauge kilobytes"
       ;;
+    "cronjob.execution_count")
+      echo "gauge count"
+      ;;
+    "cronjob.success_count")
+      echo "gauge count"
+      ;;
+    "cronjob.failure_count")
+      echo "gauge count"
+      ;;
+    "cronjob.last_execution_start")
+      echo "gauge timestamp"
+      ;;
+    "cronjob.cpu_usage")
+      echo "gauge percent"
+      ;;
+    "cronjob.memory_usage")
+      echo "gauge bytes"
+      ;;
     *)
       echo "gauge unknown"
       ;;
@@ -122,6 +140,24 @@ build_query() {
       local base_filters="$filters"
       local ok_filters="${filters},quality=\"OK (2XX, 3XX)\""
       echo "((sum(rate(nullplatform_http_response_time_count{${base_filters}}[$interval])) by (scope) * 60 - sum(rate(nullplatform_http_response_time_count{${ok_filters}}[$interval])) by (scope) * 60) / (sum(rate(nullplatform_http_response_time_count{${base_filters}}[$interval])) by (scope) * 60 )) *100"
+      ;;
+     "cronjob.execution_count")
+      echo "count_over_time(kube_job_status_start_time{$filters}[$interval])"
+      ;;
+    "cronjob.success_count")
+      echo "sum_over_time(kube_job_status_succeeded{$filters}[$interval])"
+      ;;
+    "cronjob.failure_count")
+      echo "sum_over_time(kube_job_status_failed{$filters}[$interval])"
+      ;;
+    "cronjob.last_execution_start")
+      echo "max(kube_job_status_start_time{$filters})"
+      ;;
+    "cronjob.cpu_usage")
+      echo "avg(rate(container_cpu_usage_seconds_total{pod=~\"$APPLICATION_ID.*\", container!=\"POD\"}[$interval]))"
+      ;;
+    "cronjob.memory_usage")
+      echo "avg_over_time(container_memory_usage_bytes{pod=~\"$APPLICATION_ID.*\", container!=\"POD\"}[$interval])"
       ;;
     *)
       echo "up{$filters}"  # Default query if metric not recognized
