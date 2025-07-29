@@ -1,7 +1,5 @@
 #!/bin/bash
 
-SCOPE_ID=$(echo "$CONTEXT" | jq -r '.arguments.scope_id // empty')
-
 K8S_NAMESPACE=${K8S_NAMESPACE:-"nullplatform"}
 
 NRN=$(np scope read --id "$SCOPE_ID" --format json | jq -r .nrn)
