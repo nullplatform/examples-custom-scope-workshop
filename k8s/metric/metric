@@ -142,22 +142,19 @@ build_query() {
       echo "((sum(rate(nullplatform_http_response_time_count{${base_filters}}[$interval])) by (scope) * 60 - sum(rate(nullplatform_http_response_time_count{${ok_filters}}[$interval])) by (scope) * 60) / (sum(rate(nullplatform_http_response_time_count{${base_filters}}[$interval])) by (scope) * 60 )) *100"
       ;;
     "cronjob.execution_count")
-      echo "count_over_time(kube_job_created{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval])"
+      echo "sum by (scope_id) (label_replace(count_over_time(kube_job_created{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval]), \"scope_id\", \"\$1\", \"job_name\", \"job-([0-9]+)-.*\"))"
       ;;
     "cronjob.success_count")
-      echo "increase(kube_job_status_succeeded{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval])"
+      echo "sum by (scope_id) (label_replace(increase(kube_job_status_succeeded{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval]), \"scope_id\", \"\$1\", \"job_name\", \"job-([0-9]+)-.*\"))"
       ;;
     "cronjob.failure_count")
-      echo "increase(kube_job_status_failed{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval])"
-      ;;
-    "cronjob.last_execution_start")
-      echo "max(kube_job_created{job_name=~\"job-${SCOPE_ID}-.*\"})"
+      echo "sum by (scope_id) (label_replace(increase(kube_job_status_failed{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval]), \"scope_id\", \"\$1\", \"job_name\", \"job-([0-9]+)-.*\"))"
       ;;
     "cronjob.cpu_usage")
-      echo "avg(rate(container_cpu_usage_seconds_total{pod=~\"$APPLICATION_ID.*\", container!=\"\", container!=\"POD\"}[$interval]))"
+      echo "avg(avg_over_time(container_cpu_usage_seconds_total{pod=~\"job-${SCOPE_ID}-.*\", container!=\"\", container!=\"POD\"}[$interval])) * 100"
       ;;
     "cronjob.memory_usage")
-      echo "avg_over_time(container_memory_usage_bytes{pod=~\"$APPLICATION_ID.*\", container!=\"\", container!=\"POD\"}[$interval])"
+      echo "avg by (scope_id) (label_replace(container_memory_usage_bytes{pod=~\"job-${SCOPE_ID}-.*\", container!=\"\", container!=\"POD\"} / on(pod, container) kube_pod_container_resource_limits{resource=\"memory\", unit=\"byte\", pod=~\"job-${SCOPE_ID}-.*\"}, \"scope_id\", \"\$1\", \"pod\", \"job-([0-9]+)-.*\")) * 100"
       ;;
     *)
       echo "up{$filters}"  # Default query if metric not recognized

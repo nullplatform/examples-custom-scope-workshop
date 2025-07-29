@@ -24,13 +24,6 @@ echo '{
       "available_group_by": []
     },
     {
-      "name": "cronjob.last_execution_start",
-      "title": "Last execution start time",
-      "unit": "timestamp",
-      "available_filters": ["scope_id", "application_id", "deployment_id"],
-      "available_group_by": []
-    },
-    {
       "name": "cronjob.cpu_usage",
       "title": "CPU usage",
       "unit": "%",
@@ -40,7 +33,7 @@ echo '{
     {
       "name": "cronjob.memory_usage",
       "title": "Memory usage",
-      "unit": "bytes",
+      "unit": "%",
       "available_filters": ["scope_id", "application_id", "deployment_id"],
       "available_group_by": ["pod"]
     }
