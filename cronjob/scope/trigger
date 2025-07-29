@@ -8,4 +8,8 @@ SCOPE_ID=$(echo "$CONTEXT" | jq -r '.scope.id')
 
 JOB=$(kubectl get cronjob -n "$K8S_NAMESPACE" -l "scope_id=$SCOPE_ID" -o jsonpath="{.items[0].metadata.name}" 2>/dev/null || echo "")
 
+echo "Triggering job $JOB"
+
 kubectl create job --from="cronjob/$JOB" "$JOB-$(date +%s)"
+
+echo "The job $JOB was triggered, you can follow the execution from the logs screen"
