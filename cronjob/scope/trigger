@@ -10,6 +10,6 @@ JOB=$(kubectl get cronjob -n "$K8S_NAMESPACE" -l "scope_id=$SCOPE_ID" -o jsonpat
 
 echo "Triggering job $JOB"
 
-kubectl create job --from="cronjob/$JOB" "$JOB-$(date +%s)"
+kubectl create job --from="cronjob/$JOB" "$JOB-$(date +%s)" -n "$K8S_NAMESPACE"
 
 echo "The job $JOB was triggered, you can follow the execution from the logs screen"
