@@ -142,7 +142,7 @@ build_query() {
       echo "((sum(rate(nullplatform_http_response_time_count{${base_filters}}[$interval])) by (scope) * 60 - sum(rate(nullplatform_http_response_time_count{${ok_filters}}[$interval])) by (scope) * 60) / (sum(rate(nullplatform_http_response_time_count{${base_filters}}[$interval])) by (scope) * 60 )) *100"
       ;;
     "cronjob.execution_count")
-      echo "sum by (scope_id) (label_replace(count_over_time(kube_job_created{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval]), \"scope_id\", \"\$1\", \"job_name\", \"job-([0-9]+)-.*\"))"
+      echo "sum by (scope_id) (label_replace(increase(kube_job_status_succeeded{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval]) +increase(kube_job_status_failed{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval]),\"scope_id\", \"\$1\", \"job_name\", \"job-([0-9]+)-.*\"))"
       ;;
     "cronjob.success_count")
       echo "sum by (scope_id) (label_replace(increase(kube_job_status_succeeded{job_name=~\"job-${SCOPE_ID}-.*\"}[$interval]), \"scope_id\", \"\$1\", \"job_name\", \"job-([0-9]+)-.*\"))"
