@@ -3,9 +3,38 @@ kind: CronJob
 metadata:
   name: job-{{ .scope.id }}-{{ .deployment.id }}
   namespace: {{ .k8s_namespace }}
+  labels:
+    name: d-{{ .scope.id }}-{{ .deployment.id }}
+    app.kubernetes.io/part-of: {{ .namespace.slug }}-{{ .application.slug }}
+    nullplatform: "true"
+    account: "{{ .account.slug }}"
+    account_id: "{{ .account.id }}"
+    namespace: "{{ .namespace.slug }}"
+    namespace_id: "{{ .namespace.id }}"
+    application: "{{ .application.slug }}"
+    application_id: "{{ .application.id }}"
+    scope: "{{ .scope.slug }}"
+    scope_id: "{{ .scope.id }}"
+    deployment_id: "{{ .deployment.id }}"
+{{- $global := index .k8s_modifiers "global" }}
+    {{- if $global }}
+        {{- $labels := index $global "labels" }}
+    {{- if $labels }}
+{{ data.ToYAML $labels | indent 4 }}
+    {{- end }}
+{{- end }}
+  {{- $deployment := index .k8s_modifiers "deployment" }}
+  {{- if $deployment }}
+    {{- $labels := index $deployment "labels" }}
+  {{- if $labels }}
+{{ data.ToYAML $labels | indent 4 }}
+  {{- end }}
+{{- end }}
 spec:
   schedule: "{{ .scope.capabilities.cron }}"
-  concurrencyPolicy: Forbid
+  concurrencyPolicy: {{ .scope.capabilities.concurrency_policy }}
+  successfulJobsHistoryLimit: {{ .scope.capabilities.history_limit }}
+  failedJobsHistoryLimit: {{ .scope.capabilities.history_limit }}
   jobTemplate:
     metadata:
       labels:
@@ -36,6 +65,7 @@ spec:
           {{- end }}
         {{- end }}
     spec:
+      backoffLimit: {{ .scope.capabilities.retries }}
       template:
         metadata:
           labels:
