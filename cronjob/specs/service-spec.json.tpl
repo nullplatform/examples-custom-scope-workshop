@@ -17,13 +17,9 @@
           "type": "integer"
         },
         "cron": {
-          "description": "Specifies how frequently the job should run using a standard cron expression.",
-          "export": false,
-          "pattern": "^(((\\*|\\d+)(/\\d+)?)(,((\\*|\\d+)(/\\d+)?))*)\\s+(((\\*|\\d+)(/\\d+)?)(,((\\*|\\d+)(/\\d+)?))*)\\s+(((\\*|\\d+)(/\\d+)?)(,((\\*|\\d+)(/\\d+)?))*)\\s+(((\\*|\\d+)(/\\d+)?)(,((\\*|\\d+)(/\\d+)?))*)\\s+(((\\*|\\d+)(/\\d+)?)(,((\\*|\\d+)(/\\d+)?))*)$",
-          "placeholder": "e.g. */5 * * * * (every 5 minutes)",
-          "readOnly": false,
+          "type": "string",
           "title": "Cron Expression",
-          "type": "string"
+          "description": "Specifies how frequently the job should run using a standard cron expression."
         },
         "ram_memory": {
           "default": 64,
