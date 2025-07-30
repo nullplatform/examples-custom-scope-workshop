@@ -117,6 +117,14 @@ spec:
               {{- end }}
             {{- end }}
         spec:
+          {{- $deployment := index .k8s_modifiers "deployment" }}
+          {{- if $deployment }}
+            {{- $tolerations := index $deployment "tolerations" }}
+            {{- if $tolerations }}
+          tolerations:
+{{ data.ToYAML $tolerations | indent 10 }}
+            {{- end }}
+          {{- end }}
           containers:
             - name: application
               envFrom:

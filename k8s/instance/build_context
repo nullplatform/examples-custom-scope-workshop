@@ -1,9 +1,5 @@
 #!/bin/bash
 
-K8S_NAMESPACE=$(echo "$CONTEXT" | jq -r --arg default "$K8S_NAMESPACE" '
-  .providers["container-orchestration"].cluster.namespace // $default
-')
-
 ARGUMENTS=$(echo "$CONTEXT" | jq -r '.arguments // empty')
 
 export APPLICATION_ID=$(echo "$ARGUMENTS" | jq -r 'if (.application_id | type) == "array" then .application_id[0] else .application_id end')
@@ -11,5 +7,3 @@ export SCOPE_ID=$(echo "$ARGUMENTS" | jq -r 'if (.scope_id | type) == "array" th
 export DEPLOYMENT_ID=$(echo "$ARGUMENTS" | jq -r 'if (.deployment_id | type) == "array" then .deployment_id[0] else .deployment_id end')
 
 export LIMIT=${LIMIT:-10}
-
-export K8S_NAMESPACE

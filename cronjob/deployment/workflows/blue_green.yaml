@@ -1,7 +1,5 @@
 include:
   - "$SERVICE_PATH/values.yaml"
-configuration:
-  INGRESS_TEMPLATE: "$INITIAL_INGRESS_PATH"
 steps:
   - name: route traffic
     action: skip

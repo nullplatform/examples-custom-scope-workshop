@@ -1,9 +1,5 @@
 #!/bin/bash
 
-K8S_NAMESPACE=$(echo "$CONTEXT" | jq -r --arg default "$K8S_NAMESPACE" '
-  .providers["container-orchestration"].cluster.namespace // $default
-')
-
 export SCOPE_ID=$(echo "$NP_ACTION_CONTEXT" | jq -r '.notification.arguments.scope_id // empty')
 export NEXT_PAGE_TOKEN=$(echo "$NP_ACTION_CONTEXT" | jq -r '.notification.arguments.next_page_token // empty')
 export START_TIME=$(echo "$NP_ACTION_CONTEXT" | jq -r '.notification.arguments.start_time // empty')
@@ -14,5 +10,3 @@ if [ -z "$APPLICATION_ID" ]; then
     echo "Error: Missing required parameters: APPLICATION_ID" >&2
     exit 1
 fi
-
-export K8S_NAMESPACE

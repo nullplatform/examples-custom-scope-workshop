@@ -57,18 +57,6 @@ if [ -z "${SERVICE_PATH:-}" ]; then
 fi
 stop_spinner_success "SERVICE_PATH found and loaded successfully."
 
-start_spinner "Validating that the ENVIRONMENT has been loaded into the environment."
-if [ -z "${ENVIRONMENT:-}" ]; then
-  stop_spinner_error "ENVIRONMENT is not set. Please export the ENVIRONMENT environment variable before running this script."
-fi
-stop_spinner_success "ENVIRONMENT found and loaded successfully."
-
-start_spinner "Validating that the REPO_PATH has been loaded into the environment."
-if [ -z "${REPO_PATH:-}" ]; then
-  stop_spinner_error "REPO_PATH is not set. Please export the REPO_PATH environment variable before running this script."
-fi
-stop_spinner_success "REPO_PATH found and loaded successfully."
-
 # --- Step 2: Generate and Create Service Specification ---
 
 SERVICE_SPEC_PATH="$SERVICE_PATH/specs/service-spec.json"
