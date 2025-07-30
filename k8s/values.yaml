@@ -15,57 +15,38 @@ configuration:
   INITIAL_INGRESS_PATH: "$SERVICE_PATH/deployment/templates/initial-ingress.yaml.tpl"
   BLUE_GREEN_INGRESS_PATH: "$SERVICE_PATH/deployment/templates/blue-green-ingress.yaml.tpl"
   SERVICE_ACCOUNT_TEMPLATE: "$SERVICE_PATH/scope/templates/service-account.yaml.tpl"
+  IMAGE_PULL_SECRETS:
+    ENABLED: true
+    SECRETS:
+      - ecr-secret
+  # VAULT_ADDR: "http://localhost:8200"
+  # VAULT_TOKEN: "myroot"
   IAM:
     ENABLED: false
-#    PREFIX: nullplatform-scopes
-#    ROLE:
-#      POLICIES:
-#        - TYPE: arn
-#          VALUE: arn:aws:iam::aws:policy/AmazonS3FullAccess
-#        - TYPE: arn
-#          VALUE: arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
-#        - TYPE: inline
-#          VALUE: |
-#            {
-#              "Version": "2012-10-17",
-#              "Statement": [
-#                {
-#                  "Effect": "Allow",
-#                  "Action": [
-#                    "sqs:GetQueueAttributes"
-#                  ],
-#                  "Resource": [
-#                    "arn:aws:sqs:*:*:myapp-*"
-#                  ]
-#                }
-#              ]
-#            }
-#    BOUNDARY_ARN: arn:aws:iam::aws:policy/AmazonS3FullAccess
-  #  DEPLOY_STRATEGY: rolling
-  #  K8S_MODIFIERS:
-  #    global:
-  #      annotations:
-  #        priority: P3
-  #      labels:
-  #        country: argentina
-  #    service:
-  #      annotations:
-  #        some-alb-annotation: value
-  #      labels:
-  #        cost-center: payments
-  #    ingress:
-  #      annotations:
-  #        some-ingress-annotation: value
-  #      labels:
-  #        cost-center: payments
-  #    deployment:
-  #      annotations:
-  #        datadog-annotation: value
-  #      labels:
-  #        cost-center: payments
-  #    secret:
-  #      labels:
-  #        cost-center: payments
+  #    PREFIX: nullplatform-scopes
+  #    ROLE:
+  #      POLICIES:
+  #        - TYPE: arn
+  #          VALUE: arn:aws:iam::aws:policy/AmazonS3FullAccess
+  #        - TYPE: arn
+  #          VALUE: arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
+  #        - TYPE: inline
+  #          VALUE: |
+  #            {
+  #              "Version": "2012-10-17",
+  #              "Statement": [
+  #                {
+  #                  "Effect": "Allow",
+  #                  "Action": [
+  #                    "sqs:GetQueueAttributes"
+  #                  ],
+  #                  "Resource": [
+  #                    "arn:aws:sqs:*:*:myapp-*"
+  #                  ]
+  #                }
+  #              ]
+  #            }
+  #      BOUNDARY_ARN: arn:aws:iam::aws:policy/AmazonS3FullAccess
   MANIFEST_BACKUP:
     ENABLED: false
 #    TYPE: s3
@@ -93,6 +74,15 @@ configuration:
 #        datadog-annotation: value
 #      labels:
 #        cost-center: payments
+#      tolerations:
+#        - key: "my-taint"
+#          operator: "Equal"
+#          value: "my-value"
+#          effect: "NoSchedule"
+#        - key: "my-taint2"
+#          operator: "Equal"
+#          value: "my-value2"
+#          effect: "NoSchedule"
 #    secret:
 #      labels:
 #        cost-center: payments
