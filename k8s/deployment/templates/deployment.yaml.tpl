@@ -62,8 +62,22 @@ spec:
       {{- end }}
     {{- end }}
     spec:
+      {{- if .pull_secrets.ENABLED }}
+      imagePullSecrets:
+        {{- range $secret := .pull_secrets.SECRETS }}
+            - name: {{ $secret }}
+        {{- end }}
+      {{- end }}
       {{- if .service_account_name }}
       serviceAccountName: {{ .service_account_name }}
+      {{- end }}
+      {{- $deployment := index .k8s_modifiers "deployment" }}
+        {{- if $deployment }}
+        {{- $tolerations := index $deployment "tolerations" }}
+        {{- if $tolerations }}
+      tolerations:
+{{ data.ToYAML $tolerations | indent 8 }}
+      {{- end }}
       {{- end }}
       containers:
         - name: http
