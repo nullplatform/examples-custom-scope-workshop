@@ -26,11 +26,11 @@ steps:
       - name: INGRESS_FILE
         type: file
         file: "$OUTPUT_DIR/ingress-$SCOPE_ID-$DEPLOYMENT_ID.yaml"
-  - name: apply traffic
+  - name: delete ingress
     type: script
     file: "$SERVICE_PATH/apply_templates"
     configuration:
-      ACTION: apply
+      ACTION: delete
       DRY_RUN: false
   - name: build deployment
     type: script
