@@ -1,0 +1,19 @@
+#!/bin/bash
+
+ASSET_PLATFORM=$(echo "$CONTEXT" | jq -r .asset.platform)
+
+MODIFIERS=$(echo "$CONTEXT" | jq .k8s_modifiers)
+
+if [[ "$ASSET_PLATFORM" == "arm_64" ]]; then
+  echo "The asset is built for arm, adding tolerations to the deployment"
+
+  MODIFIERS=$(echo "$MODIFIERS" | jq '
+    if .deployment then
+      .deployment.tolerations = (.deployment.tolerations // []) + [{"key": "architecture", "operator": "Equal", "value": "arm64", "effect": "NoSchedule"}]
+    else
+      .deployment = {"tolerations": [{"key": "architecture", "operator": "Equal", "value": "arm64", "effect": "NoSchedule"}]}
+    end
+  ')
+
+  CONTEXT=$(echo "$CONTEXT" | jq  --argjson modifiers "$MODIFIERS"  '.k8s_modifiers = $modifiers')
+fi
